@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8"><title>Admin 2026</title>
+    <meta charset="UTF-8"><title>Admin Panel</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -18,7 +18,11 @@
         </div>
         <div class="admin-panel" id="adminPanel">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;">
-                <h2>Admin Dashboard 2026</h2><button class="logout-btn" onclick="userLogout()">Logout</button>
+                <h2>Admin Dashboard</h2>
+                <div class="user-controls">
+                    <a href="voting.html" class="back-btn">🏠 Back to Voting</a>
+                    <button class="logout-btn" onclick="userLogout()">Logout</button>
+                </div>
             </div>
             <div class="stats-grid">
                 <div class="stat-box">Total<h2 id="admTotal">0</h2></div>
@@ -29,13 +33,13 @@
             </div>
             <div style="background:white;padding:20px;border-radius:10px;">
                 <h3>📜 Live Vote Ledger</h3>
-                <table><thead><tr><th>#</th><th>Voter</th><th>Choice</th><th>Time</th><th>Action</th></tr></thead>
+                <table><thead><tr><th>#</th><th>Voter</th><th>Candidate</th><th>Time</th><th>Action</th></tr></thead>
                 <tbody id="admBody"></tbody></table>
             </div>
             <div style="text-align:center;margin-top:40px;"><button onclick="openAdminReset()" style="background:#c0392b;color:white;padding:15px;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">⚠️ RESET ALL DATA</button></div>
         </div>
     </div>
-    <div class="modal-overlay" id="adminModal"><div class="modal-box"><h2 style="color:#c0392b;">⚠️ Delete Everything?</h2><p>This will wipe the database.</p><div class="modal-btns"><button class="btn-cancel" onclick="closeAdminModal()">Cancel</button><button class="btn-yes" onclick="confirmReset()">Yes, Delete All</button></div></div></div>
+    <div class="modal-overlay" id="adminModal"><div class="modal-box"><h2 style="color:#c0392b;">⚠️ Delete Everything?</h2><p>This will wipe the database history.</p><div class="modal-btns"><button class="btn-cancel" onclick="closeAdminModal()">Cancel</button><button class="btn-yes" onclick="confirmReset()">Yes, Delete All</button></div></div></div>
     <script src="script.js"></script>
 </body>
 </html>
