@@ -11,11 +11,17 @@ body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, 
 .voting-section { display: none; padding: 20px; max-width: 700px; margin: 0 auto; }
 .voting-section.show { display: block; }
 .user-info { background: white; padding: 15px 20px; border-radius: 50px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+/* COLORFUL NAVIGATION BUTTONS */
+.user-controls { display: flex; gap: 10px; }
+.back-btn { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; border: none; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-weight: bold; text-decoration: none; font-size: 13px; transition: 0.2s; }
+.back-btn:hover { transform: scale(1.05); }
+.logout-btn { background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border: none; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.2s; }
+.logout-btn:hover { transform: scale(1.05); }
 .change-vote-btn { background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%); color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; display: none; }
-.logout-btn { background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; }
+
 .candidates-list { display: flex; flex-direction: column; gap: 30px; }
 .candidate-card { background: white; border-radius: 15px; padding: 25px; text-align: center; border: 3px solid #ddd; width: 100%; max-width: 450px; margin: 0 auto; transition: 0.2s; }
-.candidate-card:hover { transform: translateY(-5px); }
 .cand-photo { width: 200px; height: 250px; border-radius: 15px; object-fit: cover; margin-bottom: 15px; border: 5px solid #eee; }
 .candidate-name { font-size: 24px; font-weight: 800; margin-bottom: 10px; }
 .vote-btn-card { width: 100%; padding: 12px; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; }
@@ -28,8 +34,7 @@ body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, 
 .bar-wrapper { background: #eee; height: 25px; border-radius: 4px; overflow: hidden; margin-bottom: 15px; }
 .bar { height: 100%; transition: width 0.5s; width: 0%; }
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 9999; display: none; justify-content: center; align-items: center; }
-.modal-box { background: white; padding: 30px; border-radius: 15px; text-align: center; max-width: 350px; width: 90%; animation: popupAnim 0.3s; }
-@keyframes popupAnim { from { transform: scale(0.5); } to { transform: scale(1); } }
+.modal-box { background: white; padding: 30px; border-radius: 15px; text-align: center; max-width: 350px; width: 90%; }
 .modal-btns { margin-top: 20px; display: flex; justify-content: center; gap: 10px; }
 .btn-yes { background: #e74c3c; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
 .btn-cancel { background: #bdc3c7; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
