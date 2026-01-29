@@ -11,14 +11,18 @@
         <div class="login-section" id="candLoginSection">
             <div class="header" style="background:linear-gradient(135deg, #16a085 0%, #27ae60 100%);"><h1>🎯 Candidate Portal</h1></div>
             <div class="login-card">
-                <div class="form-group"><label>Name</label><select id="candName"><option value="">-- Choose Name --</option><option value="ghanat">GHANAT</option><option value="rahim">RAHIM</option><option value="bilawal">BILAWAL</option><option value="abdullah">ABDULLAH</option></select></div>
+                <div class="form-group"><label>Candidate</label><select id="candName"><option value="">-- Choose Name --</option><option value="ghanat">GHANAT</option><option value="rahim">RAHIM</option><option value="bilawal">BILAWAL</option><option value="abdullah">ABDULLAH</option></select></div>
                 <div class="form-group"><label>6-Digit PIN</label><input type="password" id="candPin" maxlength="6"></div>
                 <button class="login-btn" onclick="candidateLogin()" style="background:#16a085;">Access Dashboard</button>
             </div>
         </div>
         <div class="admin-panel" id="candPanel">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;">
-                <h2 id="candTitle">Dashboard</h2><button class="logout-btn" onclick="userLogout()">Logout</button>
+                <h2 id="candTitle">Dashboard</h2>
+                <div class="user-controls">
+                    <a href="voting.html" class="back-btn">🏠 Back to Voting</a>
+                    <button class="logout-btn" onclick="userLogout()">Logout</button>
+                </div>
             </div>
             <div style="display:flex;gap:20px;margin-bottom:30px;flex-wrap:wrap;">
                 <div style="flex:1;min-width:200px;text-align:center;"><img id="candPhoto" src="" style="width:100%;max-width:200px;border-radius:15px;border:5px solid #ddd;"></div>
@@ -36,34 +40,26 @@
     </div>
     <script src="script.js"></script>
     <script>
-        const CANDIDATE_PINS = {'ghanat':'174961','rahim':'560381','bilawal':'920481','abdullah':'812631'};
         const MAPPING = {'ghanat':'A','rahim':'B','bilawal':'C','abdullah':'D'};
+        const PINS = {'ghanat':'174961','rahim':'560381','bilawal':'920481','abdullah':'812631'};
         function candidateLogin() {
             const name = document.getElementById('candName').value;
             const pin = document.getElementById('candPin').value.trim();
-            if(CANDIDATE_PINS[name] === pin) {
-                sessionStorage.setItem('candidate_session', name);
-                renderDashboard();
-            } else { alert("Invalid PIN"); }
+            if(PINS[name] === pin) { sessionStorage.setItem('candidate_session', name); renderDashboard(); } else { alert("Invalid PIN"); }
         }
         function renderDashboard() {
-            const user = sessionStorage.getItem('candidate_session');
-            if(!user) return;
-            document.getElementById('candLoginSection').style.display='none';
-            document.getElementById('candPanel').classList.add('show');
-            document.getElementById('candTitle').innerText = user.toUpperCase();
-            document.getElementById('candPhoto').src = user + ".jpg";
-            const code = MAPPING[user];
-            const myRecs = records.filter(r => r.candidate === code);
-            const total = Object.values(votes).reduce((a,b)=>a+b, 0);
-            const sorted = Object.entries(votes).sort((a,b)=>b[1]-a[1]);
+            const user = sessionStorage.getItem('candidate_session'); if(!user) return;
+            document.getElementById('candLoginSection').style.display='none'; document.getElementById('candPanel').classList.add('show');
+            document.getElementById('candTitle').innerText = user.toUpperCase(); document.getElementById('candPhoto').src = user + ".jpg";
+            const code = MAPPING[user]; const myRecs = records.filter(r => r.candidate === code);
+            const total = Object.values(votes).reduce((a,b)=>a+b, 0); const sorted = Object.entries(votes).sort((a,b)=>b[1]-a[1]);
             document.getElementById('myVotes').innerText = votes[code];
             document.getElementById('myPercent').innerText = total > 0 ? Math.round((votes[code]/total)*100) + "%" : "0%";
             document.getElementById('myRank').innerText = "#" + (sorted.findIndex(i => i[0] === code) + 1);
             document.getElementById('suppCount').innerText = votes[code];
-            document.getElementById('supportersList').innerHTML = myRecs.map(r => `<div style="background:#eee;padding:10px;border-radius:5px;font-weight:bold;">${r.voter.toUpperCase()}</div>`).join('');
+            document.getElementById('supportersList').innerHTML = myRecs.map(r => `<div style="background:#eee;padding:10px;border-radius:5px;font-weight:bold;text-align:center;">${r.voter.toUpperCase()}</div>`).join('');
         }
-        if(sessionStorage.getItem('candidate_session')) renderDashboard();
+        if(sessionStorage.getItem('candidate_session')) { setTimeout(renderDashboard, 500); }
     </script>
 </body>
 </html>
