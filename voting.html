@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"><title>University Election 2026</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header"><h1>🎓 University Election 2026</h1><p>Student Council Voting</p></div>
+        <div class="login-section" id="loginSection">
+            <div class="login-card">
+                <h2 style="text-align:center;margin-bottom:20px;">🔒 Voter Login</h2>
+                <div class="form-group"><label>Username</label><input type="text" id="username"></div>
+                <div class="form-group"><label>Password</label><input type="password" id="password"></div>
+                <button class="login-btn" onclick="userLogin()">Access Voting</button>
+                <div style="margin-top:20px;text-align:center;border-top:1px solid #eee;padding-top:15px;">
+                    <a href="candidate.html" style="text-decoration:none;color:#16a085;font-weight:bold;font-size:14px;">🎯 Candidate Portal</a>
+                    <span style="color:#ddd;margin:0 10px;">|</span>
+                    <a href="admin.html" style="text-decoration:none;color:#2c3e50;font-weight:bold;font-size:14px;">🔐 Admin Panel</a>
+                </div>
+            </div>
+        </div>
+        <div class="voting-section" id="votingSection">
+            <div class="user-info"><span>👤 <span id="userDisplay"></span></span>
+                <div><button class="change-vote-btn" id="changeBtn" onclick="openChangeModal()">↺ Change My Vote</button>
+                <button class="logout-btn" onclick="userLogout()">Logout</button></div>
+            </div>
+            <div id="voteStatus"></div>
+            <div class="candidates-list">
+                <div class="candidate-card cand-A"><img src="ghanat.jpg" class="cand-photo"><div class="candidate-name">GHANAT</div><button class="vote-btn-card" onclick="vote('A')">VOTE FOR GHANAT</button></div>
+                <div class="candidate-card cand-B"><img src="rahim.jpg" class="cand-photo"><div class="candidate-name">RAHIM</div><button class="vote-btn-card" onclick="vote('B')">VOTE FOR RAHIM</button></div>
+                <div class="candidate-card cand-C"><img src="bilawal.jpg" class="cand-photo"><div class="candidate-name">BILAWAL</div><button class="vote-btn-card" onclick="vote('C')">VOTE FOR BILAWAL</button></div>
+                <div class="candidate-card cand-D"><img src="abdullah.jpg" class="cand-photo"><div class="candidate-name">ABDULLAH</div><button class="vote-btn-card" onclick="vote('D')">VOTE FOR ABDULLAH</button></div>
+            </div>
+            <div class="results-section" id="resultsCharts">
+                <h3 style="text-align:center;margin-bottom:20px;">📊 Live Results (Total: <span id="totalDisp">0</span>)</h3>
+                <div class="bar-label"><span>Ghanat</span><span id="scoreA">0</span></div><div class="bar-wrapper"><div class="bar bg-A" id="barA"></div></div>
+                <div class="bar-label"><span>Rahim</span><span id="scoreB">0</span></div><div class="bar-wrapper"><div class="bar bg-B" id="barB"></div></div>
+                <div class="bar-label"><span>Bilawal</span><span id="scoreC">0</span></div><div class="bar-wrapper"><div class="bar bg-C" id="barC"></div></div>
+                <div class="bar-label"><span>Abdullah</span><span id="scoreD">0</span></div><div class="bar-wrapper"><div class="bar bg-D" id="barD"></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="voterModal"><div class="modal-box"><h3>⚠️ Change Your Vote?</h3><p>Your previous vote will be deleted.</p><div class="modal-btns"><button class="btn-cancel" onclick="closeVoterModal()">Cancel</button><button class="btn-yes" onclick="confirmChangeVote()">Yes, Change</button></div></div></div>
+    <script src="script.js"></script>
+</body>
+</html>

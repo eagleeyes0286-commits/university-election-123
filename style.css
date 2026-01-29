@@ -1,0 +1,41 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); min-height: 100vh; }
+.container, .admin-container { background: #f5f7fa; min-height: 100vh; padding-bottom: 50px; }
+.header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; text-align: center; padding: 30px 20px; }
+.login-section { max-width: 400px; margin: 40px auto; padding: 20px; }
+.login-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+.form-group input, select { width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 6px; }
+.login-btn { width: 100%; background: #1e3c72; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+.voting-section { display: none; padding: 20px; max-width: 700px; margin: 0 auto; }
+.voting-section.show { display: block; }
+.user-info { background: white; padding: 15px 20px; border-radius: 50px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.change-vote-btn { background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%); color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; display: none; }
+.logout-btn { background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; }
+.candidates-list { display: flex; flex-direction: column; gap: 30px; }
+.candidate-card { background: white; border-radius: 15px; padding: 25px; text-align: center; border: 3px solid #ddd; width: 100%; max-width: 450px; margin: 0 auto; transition: 0.2s; }
+.candidate-card:hover { transform: translateY(-5px); }
+.cand-photo { width: 200px; height: 250px; border-radius: 15px; object-fit: cover; margin-bottom: 15px; border: 5px solid #eee; }
+.candidate-name { font-size: 24px; font-weight: 800; margin-bottom: 10px; }
+.vote-btn-card { width: 100%; padding: 12px; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; }
+.cand-A { border-color: #e74c3c; } .cand-A .vote-btn-card, .bg-A { background: #e74c3c; }
+.cand-B { border-color: #3498db; } .cand-B .vote-btn-card, .bg-B { background: #3498db; }
+.cand-C { border-color: #2ecc71; } .cand-C .vote-btn-card, .bg-C { background: #2ecc71; }
+.cand-D { border-color: #e67e22; } .cand-D .vote-btn-card, .bg-D { background: #e67e22; }
+.results-section { background: white; padding: 25px; border-radius: 15px; margin-top: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+.bar-label { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 5px; }
+.bar-wrapper { background: #eee; height: 25px; border-radius: 4px; overflow: hidden; margin-bottom: 15px; }
+.bar { height: 100%; transition: width 0.5s; width: 0%; }
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 9999; display: none; justify-content: center; align-items: center; }
+.modal-box { background: white; padding: 30px; border-radius: 15px; text-align: center; max-width: 350px; width: 90%; animation: popupAnim 0.3s; }
+@keyframes popupAnim { from { transform: scale(0.5); } to { transform: scale(1); } }
+.modal-btns { margin-top: 20px; display: flex; justify-content: center; gap: 10px; }
+.btn-yes { background: #e74c3c; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
+.btn-cancel { background: #bdc3c7; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
+.admin-panel { display: none; padding: 20px; max-width: 1000px; margin: 0 auto; }
+.admin-panel.show { display: block; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
+.stat-box { background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }

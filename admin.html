@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"><title>Admin 2026</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="login-section" id="adminLoginSection">
+            <div class="header"><h1>🔐 Admin Access</h1></div>
+            <div class="login-card">
+                <div class="form-group"><label>User</label><input type="text" id="admUser"></div>
+                <div class="form-group"><label>Pass</label><input type="password" id="admPass"></div>
+                <button class="login-btn" onclick="adminLogin()">Enter Dashboard</button>
+            </div>
+        </div>
+        <div class="admin-panel" id="adminPanel">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;">
+                <h2>Admin Dashboard 2026</h2><button class="logout-btn" onclick="userLogout()">Logout</button>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-box">Total<h2 id="admTotal">0</h2></div>
+                <div class="stat-box" style="border-bottom:3px solid #e74c3c">Ghanat<h2 id="admA">0</h2></div>
+                <div class="stat-box" style="border-bottom:3px solid #3498db">Rahim<h2 id="admB">0</h2></div>
+                <div class="stat-box" style="border-bottom:3px solid #2ecc71">Bilawal<h2 id="admC">0</h2></div>
+                <div class="stat-box" style="border-bottom:3px solid #e67e22">Abdullah<h2 id="admD">0</h2></div>
+            </div>
+            <div style="background:white;padding:20px;border-radius:10px;">
+                <h3>📜 Live Vote Ledger</h3>
+                <table><thead><tr><th>#</th><th>Voter</th><th>Choice</th><th>Time</th><th>Action</th></tr></thead>
+                <tbody id="admBody"></tbody></table>
+            </div>
+            <div style="text-align:center;margin-top:40px;"><button onclick="openAdminReset()" style="background:#c0392b;color:white;padding:15px;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">⚠️ RESET ALL DATA</button></div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="adminModal"><div class="modal-box"><h2 style="color:#c0392b;">⚠️ Delete Everything?</h2><p>This will wipe the database.</p><div class="modal-btns"><button class="btn-cancel" onclick="closeAdminModal()">Cancel</button><button class="btn-yes" onclick="confirmReset()">Yes, Delete All</button></div></div></div>
+    <script src="script.js"></script>
+</body>
+</html>
