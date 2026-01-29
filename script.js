@@ -1,6 +1,4 @@
-// ==========================================
-// 1. FIREBASE CONFIGURATION (LIVE)
-// ==========================================
+// FIREBASE CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyC4AAR_D8eN3gr99ESB4R6mrN1fBdYI_e0",
   authDomain: "universityelection26.firebaseapp.com",
@@ -16,9 +14,7 @@ if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
 const db = firebase.database();
 const DB_REF = db.ref('university_election_2026');
 
-// ==========================================
-// 2. THE VOTER LIST (34 PEOPLE)
-// ==========================================
+// VOTER LIST
 const voters = {
     'abdur rehman': '48291', 'asaad': '73915', 'muhammad bhai': '61047',
     'minhaj': '29584', 'aman': '84320', 'hasnain': '11223',
@@ -38,23 +34,16 @@ const CANDIDATE_NAMES = { 'A': 'GHANAT', 'B': 'RAHIM', 'C': 'BILAWAL', 'D': 'ABD
 const KEYS = ['A', 'B', 'C', 'D'];
 const ADMIN = { u: 'syed muhammad moosa rizvi', p: '3316' };
 
-// Global State
 let votes = { A:0, B:0, C:0, D:0 };
 let records = [];
 let currentUser = null;
 
-// ==========================================
-// 3. CORE SYNC LOGIC
-// ==========================================
 document.addEventListener('DOMContentLoaded', () => {
     DB_REF.on('value', (snapshot) => {
         const data = snapshot.val();
         if (data) {
             votes = data.votes || { A:0, B:0, C:0, D:0 };
             records = data.records || [];
-        } else {
-            votes = { A:0, B:0, C:0, D:0 };
-            records = [];
         }
         if(document.getElementById('votingSection')) updateResults();
         if(document.getElementById('voteStatus') && currentUser) checkVoteStatus();
@@ -62,19 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
             renderAdminStats();
             renderAdminTable();
         }
-        if(document.getElementById('candPanel') && sessionStorage.getItem('candidate_session')) {
-             if(typeof renderDashboard === "function") renderDashboard();
-        }
     });
 });
 
-function pushToCloud() {
-    DB_REF.set({ votes: votes, records: records });
-}
-
-// ==========================================
-// 4. VOTER LOGIC
-// ==========================================
 window.userLogin = function() {
     const u = document.getElementById('username').value.trim().toLowerCase();
     const p = document.getElementById('password').value;
@@ -91,7 +70,7 @@ window.vote = function(cand) {
     if(!currentUser) return;
     votes[cand]++;
     records.push({ id: Date.now(), voter: currentUser, candidate: cand, time: new Date().toLocaleString() });
-    pushToCloud();
+    DB_REF.set({ votes: votes, records: records });
 };
 
 window.checkVoteStatus = function() {
@@ -102,7 +81,7 @@ window.checkVoteStatus = function() {
     if(rec) {
         btns.forEach(b => b.disabled = true);
         if(chg) chg.style.display = 'inline-block';
-        if(msg) msg.innerHTML = `<div style="background:#d4edda; color:#155724; padding:15px; border-radius:10px; margin-bottom:20px; text-align:center;">✅ Vote Recorded for ${CANDIDATE_NAMES[rec.candidate]}</div>`;
+        if(msg) msg.innerHTML = `<div style="background:#d4edda; color:#155724; padding:15px; border-radius:10px; margin-bottom:20px; text-align:center;">✅ You Voted for ${CANDIDATE_NAMES[rec.candidate]}</div>`;
     } else {
         btns.forEach(b => b.disabled = false);
         if(chg) chg.style.display = 'none';
@@ -122,24 +101,11 @@ window.updateResults = function() {
     });
 };
 
-window.openChangeModal = function() { document.getElementById('voterModal').style.display='flex'; }
-window.closeVoterModal = function() { document.getElementById('voterModal').style.display='none'; }
-window.confirmChangeVote = function() {
-    const idx = records.findIndex(r => r.voter === currentUser);
-    if(idx !== -1) {
-        const oldC = records[idx].candidate;
-        if(votes[oldC]>0) votes[oldC]--;
-        records.splice(idx, 1);
-        pushToCloud();
-    }
-    closeVoterModal();
+window.userLogout = function() {
+    sessionStorage.clear();
+    window.location.href = 'voting.html';
 };
 
-window.userLogout = function() { location.reload(); }
-
-// ==========================================
-// 5. ADMIN LOGIC
-// ==========================================
 window.adminLogin = function() {
     const u = document.getElementById('admUser').value.trim().toLowerCase();
     const p = document.getElementById('admPass').value;
@@ -156,13 +122,13 @@ window.showAdmin = function() {
     renderAdminTable();
 };
 
-window.renderAdminStats = function() {
+function renderAdminStats() {
     let t = Object.values(votes).reduce((a,b)=>a+b,0);
     document.getElementById('admTotal').innerText = t;
     KEYS.forEach(k => { document.getElementById('adm'+k).innerText = votes[k]; });
-};
+}
 
-window.renderAdminTable = function() {
+function renderAdminTable() {
     const body = document.getElementById('admBody');
     if(!body) return;
     body.innerHTML = '';
@@ -170,24 +136,34 @@ window.renderAdminTable = function() {
         body.innerHTML += `<tr><td>${i+1}</td><td><b>${r.voter}</b></td><td>${CANDIDATE_NAMES[r.candidate]}</td><td>${r.time}</td>
         <td align="center"><button onclick="deleteVote(${r.id})" style="color:red;cursor:pointer;background:none;border:none;">❌</button></td></tr>`;
     });
-};
+}
 
 window.deleteVote = function(id) {
-    if(!confirm("Delete this vote?")) return;
+    if(!confirm("Delete?")) return;
     const idx = records.findIndex(r => r.id === id);
     if(idx !== -1) {
         votes[records[idx].candidate]--;
         records.splice(idx,1);
-        pushToCloud();
+        DB_REF.set({ votes: votes, records: records });
     }
+};
+
+window.openChangeModal = function() { document.getElementById('voterModal').style.display='flex'; }
+window.closeVoterModal = function() { document.getElementById('voterModal').style.display='none'; }
+window.confirmChangeVote = function() {
+    const idx = records.findIndex(r => r.voter === currentUser);
+    if(idx !== -1) {
+        const oldC = records[idx].candidate;
+        if(votes[oldC]>0) votes[oldC]--;
+        records.splice(idx, 1);
+        DB_REF.set({ votes: votes, records: records });
+    }
+    closeVoterModal();
 };
 
 window.openAdminReset = function() { document.getElementById('adminModal').style.display='flex'; };
 window.closeAdminModal = function() { document.getElementById('adminModal').style.display='none'; };
 window.confirmReset = function() {
-    if(sessionStorage.getItem('admOK') !== 'true') return;
-    votes = { A:0, B:0, C:0, D:0 };
-    records = [];
-    pushToCloud();
+    DB_REF.set({ votes: { A:0, B:0, C:0, D:0 }, records: [] });
     closeAdminModal();
 };
