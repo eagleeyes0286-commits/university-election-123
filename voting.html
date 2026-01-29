@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8"><title>University Election 2026</title>
+    <meta charset="UTF-8"><title>Election 2026</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -24,8 +24,10 @@
         </div>
         <div class="voting-section" id="votingSection">
             <div class="user-info"><span>👤 <span id="userDisplay"></span></span>
-                <div><button class="change-vote-btn" id="changeBtn" onclick="openChangeModal()">↺ Change My Vote</button>
-                <button class="logout-btn" onclick="userLogout()">Logout</button></div>
+                <div class="user-controls">
+                    <button class="change-vote-btn" id="changeBtn" onclick="openChangeModal()">↺ Change Vote</button>
+                    <button class="logout-btn" onclick="userLogout()">Logout</button>
+                </div>
             </div>
             <div id="voteStatus"></div>
             <div class="candidates-list">
@@ -34,7 +36,7 @@
                 <div class="candidate-card cand-C"><img src="bilawal.jpg" class="cand-photo"><div class="candidate-name">BILAWAL</div><button class="vote-btn-card" onclick="vote('C')">VOTE FOR BILAWAL</button></div>
                 <div class="candidate-card cand-D"><img src="abdullah.jpg" class="cand-photo"><div class="candidate-name">ABDULLAH</div><button class="vote-btn-card" onclick="vote('D')">VOTE FOR ABDULLAH</button></div>
             </div>
-            <div class="results-section" id="resultsCharts">
+            <div class="results-section">
                 <h3 style="text-align:center;margin-bottom:20px;">📊 Live Results (Total: <span id="totalDisp">0</span>)</h3>
                 <div class="bar-label"><span>Ghanat</span><span id="scoreA">0</span></div><div class="bar-wrapper"><div class="bar bg-A" id="barA"></div></div>
                 <div class="bar-label"><span>Rahim</span><span id="scoreB">0</span></div><div class="bar-wrapper"><div class="bar bg-B" id="barB"></div></div>
